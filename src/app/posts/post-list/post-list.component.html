@@ -4,9 +4,10 @@
     <mat-expansion-panel-header>
       {{ post.title }}
     </mat-expansion-panel-header>
-    <p>
+      <div class="post-image">
+        <img [src]="post.imagePath" [alt]="post.title" />
+     </div>
       {{ post.content }}
-    </p>
     <mat-action-row>
       <a
         mat-button
