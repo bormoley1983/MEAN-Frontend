@@ -4,9 +4,10 @@ import { PostsService } from 'src/app/services/post.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-post-list',
-  templateUrl: './post-list.component.html',
-  styleUrls: ['./post-list.component.scss'],
+    selector: 'app-post-list',
+    templateUrl: './post-list.component.html',
+    styleUrls: ['./post-list.component.scss'],
+    standalone: false
 })
 export class PostListComponent implements OnInit, OnDestroy {
   posts: Post[] = [];
