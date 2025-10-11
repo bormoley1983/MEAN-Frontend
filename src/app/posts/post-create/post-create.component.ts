@@ -6,9 +6,10 @@ import { Post } from '../../models/post.model';
 import { mimeType } from './mime-type.validator';
 
 @Component({
-  selector: 'app-post-create',
-  templateUrl: './post-create.component.html',
-  styleUrls: ['./post-create.component.scss'],
+    selector: 'app-post-create',
+    templateUrl: './post-create.component.html',
+    styleUrls: ['./post-create.component.scss'],
+    standalone: false
 })
 export class PostCreateComponent implements OnInit {
   constructor(
