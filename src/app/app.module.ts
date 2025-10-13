@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { provideHttpClient, withInterceptorsFromDi, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,15 +15,22 @@ import { HeaderComponent } from './header/header.component';
 import { PostCreateComponent } from './posts/post-create/post-create.component';
 import { PostListComponent } from './posts/post-list/post-list.component';
 import { AppRoutingModule } from './app-routing.module';
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
+import { AuthInterceptor } from './auth/auth-interceptor';
 
 @NgModule({ declarations: [
         AppComponent,
         PostCreateComponent,
         HeaderComponent,
         PostListComponent,
+        LoginComponent,
+        SignupComponent,
     ],
-    bootstrap: [AppComponent], imports: [BrowserModule,
+   imports: [
+        BrowserModule,
         AppRoutingModule,
+        FormsModule,
         ReactiveFormsModule,
         MatPaginatorModule,
         MatInputModule,
@@ -31,5 +38,15 @@ import { AppRoutingModule } from './app-routing.module';
         MatButtonModule,
         MatToolbarModule,
         MatExpansionModule,
-        MatProgressSpinnerModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
+        MatProgressSpinnerModule], 
+        providers: [
+            provideHttpClient(withInterceptorsFromDi()),
+            {
+                provide: HTTP_INTERCEPTORS,
+                useClass: AuthInterceptor,
+                multi: true
+            }
+        ],
+        bootstrap: [AppComponent], 
+        })
 export class AppModule {}
