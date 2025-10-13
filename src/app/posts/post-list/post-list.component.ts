@@ -1,16 +1,16 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { PostsService } from 'src/app/services/post.service';
-import { Subscription } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { Subscription } from 'rxjs';
+import { PostsService } from 'src/app/services/post.service';
 
-import { Post } from '../../models/post.model';
 import { AuthService } from '../../auth/auth.service';
+import { Post } from '../../models/post.model';
 
 @Component({
-    selector: 'app-post-list',
-    templateUrl: './post-list.component.html',
-    styleUrls: ['./post-list.component.scss'],
-    standalone: false
+  selector: 'app-post-list',
+  templateUrl: './post-list.component.html',
+  styleUrls: ['./post-list.component.scss'],
+  standalone: false,
 })
 export class PostListComponent implements OnInit, OnDestroy {
   posts: Post[] = [];
@@ -23,7 +23,10 @@ export class PostListComponent implements OnInit, OnDestroy {
   private postsSub!: Subscription;
   private authStatusSub!: Subscription;
 
-  constructor(public postsService: PostsService, private authService: AuthService) {}
+  constructor(
+    public postsService: PostsService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
     this.isLoading = true;
@@ -32,22 +35,25 @@ export class PostListComponent implements OnInit, OnDestroy {
 
     this.postsSub = this.postsService
       .getPostUpdateListener()
-      .subscribe((postsData: {posts: Post[], totalPostsCount: number } ) => {
+      .subscribe((postsData: { posts: Post[]; totalPostsCount: number }) => {
         this.isLoading = false;
         this.posts = postsData.posts;
         this.totalPosts = postsData.totalPostsCount;
-        console.log('PostListComponent ngOnInit - posts updated:', postsData.posts);
+        console.log(
+          'PostListComponent ngOnInit - posts updated:',
+          postsData.posts
+        );
       });
-      this.userIsAuthenticated = this.authService.getAuthStatus();
-      this.authStatusSub = this.authService
-        .getAuthStatusListener()
-        .subscribe(isAuthentificated => {
-          this.userIsAuthenticated = isAuthentificated;
-        });
+    this.userIsAuthenticated = this.authService.getAuthStatus();
+    this.authStatusSub = this.authService
+      .getAuthStatusListener()
+      .subscribe(isAuthentificated => {
+        this.userIsAuthenticated = isAuthentificated;
+      });
   }
 
   onChangePagination(pageData: PageEvent) {
-    this.isLoading = true;   
+    this.isLoading = true;
     this.currentPage = pageData.pageIndex + 1;
     this.postsPerPage = pageData.pageSize;
     this.postsService.getPosts(this.postsPerPage, this.currentPage);

@@ -1,0 +1,13 @@
+.prettierignore
+node_modules
+dist
+build
+coverage
+*.min.js
+*.lock
+*.log
+*.tsbuildinfo
+.angular
+.vscode
+e2e
+karma.conf.js
