@@ -1,24 +1,24 @@
-import { Component } from "@angular/core"
-import { NgForm } from "@angular/forms";
+import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
-import { AuthService } from "../auth.service";
+import { AuthService } from '../auth.service';
 
 @Component({
-    templateUrl: "./signup.component.html",
-    styleUrls: ["./signup.component.scss"],
-    standalone: false
+  templateUrl: './signup.component.html',
+  styleUrls: ['./signup.component.scss'],
+  standalone: false,
 })
 export class SignupComponent {
-    isLoading = false;
+  isLoading = false;
 
-    constructor(public authService: AuthService) {}
+  constructor(public authService: AuthService) {}
 
-    onSignup(form : NgForm) {
-        if (form.invalid) {
-            return;
-        }
-        this.isLoading = true;
-        console.log(form.value);
-        this.authService.createUser(form.value.email, form.value.password);
+  onSignup(form: NgForm) {
+    if (form.invalid) {
+      return;
     }
+    this.isLoading = true;
+    console.log(form.value);
+    this.authService.createUser(form.value.email, form.value.password);
+  }
 }
