@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { PostsService } from 'src/app/services/post.service';
+import { PostsService } from 'src/app/posts/post.service';
 import { Post } from '../../models/post.model';
 import { mimeType } from './mime-type.validator';
 
@@ -18,7 +18,7 @@ export class PostCreateComponent implements OnInit {
   ) {}
   public mode = 'create';
   private postId: string = '';
-  post: Post = { id: null, title: '', content: '', imagePath: '' };
+  post: Post = { id: null, title: '', content: '', imagePath: '', creator: '' };
   isLoading = false;
   form: FormGroup = new FormGroup({
     title: new FormControl('', {
@@ -46,6 +46,7 @@ export class PostCreateComponent implements OnInit {
             title: postData.post.title,
             content: postData.post.content,
             imagePath: postData.post.imagePath,
+            creator: postData.post.creator,
           };
           this.form = new FormGroup({
             title: new FormControl(this.post.title, {
@@ -62,7 +63,13 @@ export class PostCreateComponent implements OnInit {
         // }, 5000);
       } else {
         this.mode = 'create';
-        this.post = { id: null, title: '', content: '', imagePath: '' };
+        this.post = {
+          id: null,
+          title: '',
+          content: '',
+          imagePath: '',
+          creator: '',
+        };
         this.postId = '';
 
         this.form = new FormGroup({
