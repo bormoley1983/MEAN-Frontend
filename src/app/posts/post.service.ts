@@ -34,6 +34,7 @@ export class PostsService {
                 content: post.content,
                 id: post._id,
                 imagePath: post.imagePath,
+                creator: post.creator,
               };
             }),
             totalPostsCount: postData.totalPostsCount,
@@ -72,19 +73,17 @@ export class PostsService {
       }>('http://localhost:3000/api/posts', postData)
       .subscribe(responseData => {
         console.log(responseData.message);
-        // const post: Post = {
-        //   id: responseData.post.id,
-        //   title: responseData.post.title,
-        //   content: responseData.post.content,
-        //   imagePath: responseData.post.imagePath
-        // }
-        // this.posts.push(post);
-        // this.postsUpdated.next([...this.posts]);
         this.router.navigate(['/']);
       });
   }
 
-  updatePost(id: string, title: string, content: string, image: File | string) {
+  updatePost(
+    id: string,
+    title: string,
+    content: string,
+    image: File | string,
+    creator?: string
+  ) {
     let postData: Post | FormData;
     if (typeof image === 'object') {
       postData = new FormData();
@@ -98,35 +97,18 @@ export class PostsService {
         title: title,
         content: content,
         imagePath: image,
+        creator: creator || '',
       };
     }
 
     this.http
       .put('http://localhost:3000/api/posts/' + id, postData)
       .subscribe(response => {
-        // console.log(response);
-        // const updatedPosts = [...this.posts];
-        // const oldPostIndex = updatedPosts.findIndex((p) => p.id == id);
-        // const post: Post = {
-        //   id: id,
-        //   title: title,
-        //   content: content,
-        //   imagePath: ''//response.imagePath
-        // }
-        // updatedPosts[oldPostIndex] = post;
-        // this.posts = updatedPosts;
-        // this.postsUpdated.next([...this.posts]);
         this.router.navigate(['/']);
       });
   }
 
   deletePost(postId: string) {
     return this.http.delete('http://localhost:3000/api/posts/' + postId);
-    // .subscribe(() => {
-    //   const updatedPosts = this.posts.filter((post) => post.id !== postId);
-    //   this.posts = updatedPosts;
-    //   this.postsUpdated.next([...this.posts]);
-    //   console.log('Deleted! PostId:' + postId);
-    // });
   }
 }

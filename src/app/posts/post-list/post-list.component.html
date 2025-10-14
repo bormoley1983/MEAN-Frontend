@@ -12,7 +12,7 @@
           <img [src]="post.imagePath" [alt]="post.title" />
         </div>
         {{ post.content }}
-        @if (userIsAuthenticated) {
+        @if (userIsAuthenticated && userId === post.creator) {
           <mat-action-row>
             <a mat-button color="primary" [routerLink]="['/edit', post.id]">Edit</a>
             <button mat-button color="warn" (click)="onDeletePost(post.id ?? '')">Delete</button>
