@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Subscription } from 'rxjs/internal/Subscription';
+import { AuthService } from 'src/app/auth/auth.service';
 import { PostsService } from 'src/app/posts/post.service';
 import { Post } from '../../models/post.model';
 import { mimeType } from './mime-type.validator';
@@ -11,15 +13,13 @@ import { mimeType } from './mime-type.validator';
   styleUrls: ['./post-create.component.scss'],
   standalone: false,
 })
-export class PostCreateComponent implements OnInit {
-  constructor(
-    public postsService: PostsService,
-    public route: ActivatedRoute
-  ) {}
+export class PostCreateComponent implements OnInit, OnDestroy {
   public mode = 'create';
   private postId: string = '';
-  post: Post = { id: null, title: '', content: '', imagePath: '', creator: '' };
+  private authStatusSub!: Subscription;
   isLoading = false;
+  imagePreview: string = '';
+  post: Post = { id: null, title: '', content: '', imagePath: '', creator: '' };
   form: FormGroup = new FormGroup({
     title: new FormControl('', {
       validators: [Validators.required, Validators.minLength(3)],
@@ -30,9 +30,17 @@ export class PostCreateComponent implements OnInit {
       asyncValidators: [mimeType],
     }),
   });
-  imagePreview: string = '';
+
+  constructor(
+    public postsService: PostsService,
+    public route: ActivatedRoute,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
+    this.authService.getAuthStatusListener().subscribe(authStatus => {
+      this.isLoading = false;
+    });
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       const id = paramMap.get('postId');
       if (paramMap.has('postId') && typeof id === 'string') {
@@ -119,5 +127,9 @@ export class PostCreateComponent implements OnInit {
       );
     }
     this.form.reset();
+  }
+
+  ngOnDestroy() {
+    this.authStatusSub.unsubscribe();
   }
 }
