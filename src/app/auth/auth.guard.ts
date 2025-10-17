@@ -23,7 +23,7 @@ export class AuthGuard implements CanActivate {
   ): MaybeAsync<GuardResult> {
     const isAuth = this.authAsevice.getAuthStatus();
     if (!isAuth) {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/auth/login']);
     }
     return isAuth;
   }
