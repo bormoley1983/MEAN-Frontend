@@ -11,7 +11,7 @@ import { AuthService } from '../auth/auth.service';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   userIsAuthentificated = false;
-  private authListenerSubs!: Subscription;
+  private authListenerSubs?: Subscription;
 
   constructor(private authService: AuthService) {}
 
@@ -29,6 +29,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.authListenerSubs.unsubscribe();
+    this.authListenerSubs?.unsubscribe();
   }
 }

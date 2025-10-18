@@ -21,8 +21,8 @@ export class PostListComponent implements OnInit, OnDestroy {
   pageSizeOptions = [1, 2, 3, 5];
   userIsAuthenticated = false;
   userId!: string;
-  private postsSub!: Subscription;
-  private authStatusSub!: Subscription;
+  private postsSub?: Subscription;
+  private authStatusSub?: Subscription;
 
   constructor(
     public postsService: PostsService,
@@ -74,7 +74,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.postsSub.unsubscribe();
-    this.authStatusSub.unsubscribe();
+    this.postsSub?.unsubscribe();
+    this.authStatusSub?.unsubscribe();
   }
 }
