@@ -16,7 +16,7 @@ import { mimeType } from './mime-type.validator';
 export class PostCreateComponent implements OnInit, OnDestroy {
   public mode = 'create';
   private postId: string = '';
-  private authStatusSub!: Subscription;
+  private authStatusSub?: Subscription;
   isLoading = false;
   imagePreview: string = '';
   post: Post = { id: null, title: '', content: '', imagePath: '', creator: '' };
@@ -130,6 +130,6 @@ export class PostCreateComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.authStatusSub.unsubscribe();
+    this.authStatusSub?.unsubscribe();
   }
 }

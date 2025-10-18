@@ -11,7 +11,7 @@ import { AuthService } from '../auth.service';
 })
 export class SignupComponent implements OnInit, OnDestroy {
   isLoading = false;
-  private authStatusSub!: Subscription;
+  private authStatusSub?: Subscription;
 
   constructor(public authService: AuthService) {}
 
@@ -33,6 +33,6 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.authStatusSub.unsubscribe();
+    this.authStatusSub?.unsubscribe();
   }
 }
