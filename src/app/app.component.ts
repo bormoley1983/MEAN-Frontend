@@ -8,7 +8,7 @@ import { AuthService } from './auth/auth.service';
   standalone: false,
 })
 export class AppComponent implements OnInit {
-  title = 'mean-course';
+  title = 'mean-frontend';
 
   constructor(private authService: AuthService) {}
 

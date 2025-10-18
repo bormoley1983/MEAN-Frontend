@@ -8,11 +8,11 @@ RUN npm ci
 
 COPY . .
 
-RUN npm run build
+RUN npm run build -- --configuration=production
 
 FROM nginx:alpine
 
-COPY --from=builder /app/dist/mean-course/browser /usr/share/nginx/html/
+COPY --from=builder /app/dist/mean-frontend/browser /usr/share/nginx/html/
 
 RUN echo 'server { \
     listen 4200; \
