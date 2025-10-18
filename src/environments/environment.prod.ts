@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://backend:3000/api',
+  apiUrl: '/api',
 };
+console.log('PRODUCTION environment loaded');
